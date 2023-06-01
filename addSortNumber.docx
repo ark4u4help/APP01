@@ -1,0 +1,96 @@
+public class LinkedListExample {
+    public static void main(String[] args) {
+        MyLinkedList list = new MyLinkedList();
+
+        // Inserting student marks into the linked list
+        list.insert(85);
+        list.insert(92);
+        list.insert(78);
+        list.insert(89);
+        list.insert(95);
+        list.insert(80);
+        list.insert(87);
+        list.insert(93);
+        list.insert(84);
+        list.insert(91);
+
+        System.out.println("Before sorting:");
+        list.display();
+
+        // Sorting the linked list using bubble sort
+        list.bubbleSort();
+
+        System.out.println("\nAfter sorting:");
+        list.display();
+    }
+}
+
+class MyLinkedList {
+    private Node head;
+
+    // Node class representing each element in the linked list
+    private class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Method to insert a new element at the beginning of the linked list
+    public void insert(int data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            newNode.next = head;
+            head = newNode;
+        }
+    }
+
+    // Method to display the linked list
+    public void display() {
+        Node currentNode = head;
+
+        while (currentNode != null) {
+            System.out.print(currentNode.data + " ");
+            currentNode = currentNode.next;
+        }
+    }
+
+    // Method to perform bubble sort on the linked list
+    public void bubbleSort() {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        boolean swapped;
+        do {
+            swapped = false;
+            Node current = head;
+            Node previous = null;
+
+            while (current != null && current.next != null) {
+                if (current.data > current.next.data) {
+                    if (previous == null) {
+                        Node nextNode = current.next;
+                        current.next = nextNode.next;
+                        nextNode.next = current;
+                        head = nextNode;
+                    } else {
+                        Node nextNode = current.next;
+                        current.next = nextNode.next;
+                        nextNode.next = current;
+                        previous.next = nextNode;
+                    }
+                    swapped = true;
+                }
+                previous = current;
+                current = current.next;
+            }
+        } while (swapped);
+    }
+}
